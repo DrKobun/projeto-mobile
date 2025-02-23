@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_mobile/data_storage.dart';
 import 'package:projeto_mobile/models/beer.dart';
+import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 
 class DetailsInfo extends StatelessWidget {
   final Beer beer;
@@ -20,15 +23,28 @@ class DetailsInfo extends StatelessWidget {
                 ],
               ),
             )),
-            Container(
-              margin: EdgeInsets.all(10.0),
-              horizontal: 10.0,
-            ),
-            ElevatedButton.icon(
-              onPressed: (){},
-              label: const Text("Adicionar item aos favoritos!"),
-              icon: const Icon(Icons.favorite),
-              ),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 10.0),
+          child: Consumer<DataStorage>(
+            builder: ((consumerCtx, dataStorage, child) {
+              bool beerIsAddedToFavorites = dataStorage.favoriteBeers
+                      .firstWhereOrNull(
+                          (favoriteBeer) => favoriteBeer.id == beer.id) !=
+                  null;
+              return ElevatedButton.icon(
+                icon: const Icon(Icons.favorite),
+                label: beerIsAddedToFavorites 
+                ? const Text("Added to Favorites") 
+                : const Text("Adicionar item aos favoritos"),
+                onPressed: beerIsAddedToFavorites 
+                ? null 
+                : () {
+                  dataStorage.addBeerToFavorites(beer);
+                },
+              );
+            }),
+          ),
+        )
       ]),
     );
   }
