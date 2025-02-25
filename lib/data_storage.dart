@@ -42,7 +42,7 @@ class DataStorage extends ChangeNotifier {
       _favoriteBeers = beers;
       notifyListeners();
     } catch (e) {
-      throw Exception(e.toString());
+      throw Exception(e);
     }
   }
 
@@ -59,10 +59,28 @@ class DataStorage extends ChangeNotifier {
 
       _favoriteBeers.add(newFavoriteBeer);
       notifyListeners();
-      await file.writeAsString(json.encode(_favoriteBeers));
+      await file.writeAsString(json.encode(_favoriteBeers).toString());
     }catch(e)
     {
       throw Exception(e);
     }
   }
+
+  Future<void> removeBeerFromFavorites(int beerId) async {
+    try {
+      final file = await _localFile;
+
+      if (!await file.exists()) {
+        await file.create();
+      }
+
+      List<Beer> newList = _favoriteBeers.where((beer) => beer.id !=beerId).toList();
+      _favoriteBeers = newList;
+      notifyListeners();
+      
+      await file.writeAsString(json.encode(_favoriteBeers).toString());
+    } catch (e) {
+      throw Exception(e);
+    }
+  } 
 }

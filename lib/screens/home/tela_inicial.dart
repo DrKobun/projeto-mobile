@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_mobile/screens/favorites/favorites_screen.dart';
 import 'package:projeto_mobile/screens/home/components/search_list.dart';
 
 class TelaInicial extends StatefulWidget 
@@ -17,7 +18,7 @@ class _TelaInicialState extends State<TelaInicial>
   static const List<Widget> _pages = 
   [
     SearchList(),
-    Text("Favoritos")
+    FavoritesScreen(),
   ];
 
 
