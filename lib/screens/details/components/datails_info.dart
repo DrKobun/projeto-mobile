@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_mobile/data_storage.dart';
-import 'package:projeto_mobile/models/beer.dart';
+import 'package:projeto_mobile/models/produto.dart';
 import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
 
 class DetailsInfo extends StatelessWidget {
-  final Beer beer;
-  const DetailsInfo({super.key, required this.beer});
+  final Produto produto;
+  const DetailsInfo({super.key, required this.produto});
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +18,8 @@ class DetailsInfo extends StatelessWidget {
               padding: const EdgeInsets.all(15.0),
               child: Column(
                 children: [
-                  Text(beer.name),
-                  Text(beer.description),
+                  Text(produto.name),
+                  Text(produto.description),
                 ],
               ),
             )),
@@ -27,19 +27,19 @@ class DetailsInfo extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 10.0),
           child: Consumer<DataStorage>(
             builder: ((consumerCtx, dataStorage, child) {
-              bool beerIsAddedToFavorites = dataStorage.favoriteBeers
+              bool produtoIsAddedToFavorites = dataStorage.favoriteProdutos
                       .firstWhereOrNull(
-                          (favoriteBeer) => favoriteBeer.id == beer.id) !=
+                          (favoriteProduto) => favoriteProduto.id == produto.id) !=
                   null;
               return ElevatedButton.icon(
                 icon: const Icon(Icons.favorite),
-                label: beerIsAddedToFavorites 
+                label: produtoIsAddedToFavorites 
                 ? const Text("Added to Favorites") 
                 : const Text("Adicionar item aos favoritos"),
-                onPressed: beerIsAddedToFavorites 
+                onPressed: produtoIsAddedToFavorites 
                 ? null 
                 : () {
-                  dataStorage.addBeerToFavorites(beer);
+                  dataStorage.addProdutoToFavorites(produto);
                 },
               );
             }),

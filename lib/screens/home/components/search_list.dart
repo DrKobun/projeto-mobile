@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_mobile/screens/home/components/beers_list.dart';
+import 'package:projeto_mobile/screens/home/components/produtos_list.dart';
 import 'package:projeto_mobile/screens/home/components/search_input.dart';
 
 class SearchList extends StatelessWidget 
@@ -14,7 +14,7 @@ class SearchList extends StatelessWidget
       children: const<Widget>
       [
         SearchInput(), 
-        BeersList(),   
+        ProdutosList(),   
       ],
     );
   }

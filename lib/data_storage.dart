@@ -4,14 +4,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:projeto_mobile/models/beer.dart';
+import 'package:projeto_mobile/models/produto.dart';
 
 class DataStorage extends ChangeNotifier {
   String _searchedTerm = '';
-  List<Beer> _favoriteBeers = [];
+  List<Produto> _favoriteProdutos = [];
 
   String get searchedTerm => _searchedTerm;
-  List<Beer> get favoriteBeers => UnmodifiableListView(_favoriteBeers);
+  List<Produto> get favoriteProdutos => UnmodifiableListView(_favoriteProdutos);
 
   void setSearchedTerm(String newTerm) {
     _searchedTerm = newTerm;
@@ -23,7 +23,7 @@ class DataStorage extends ChangeNotifier {
     return File('${directory.path}/favorites.json');
   }
 
-  Future<void> fetchFavoriteBeers() async {
+  Future<void> fetchFavoriteProdutos() async {
     try {
       final file = await _localFile;
 
@@ -33,20 +33,20 @@ class DataStorage extends ChangeNotifier {
 
       String fileContent = await file.readAsString();
       List<dynamic> jsonFileContent = jsonDecode(fileContent);
-      List<Beer> beers = jsonFileContent
+      List<Produto> produtos = jsonFileContent
           .map(
-            (dynamic item) => Beer.fromJson(item),
+            (dynamic item) => Produto.fromJson(item),
           )
           .toList();
 
-      _favoriteBeers = beers;
+      _favoriteProdutos = produtos;
       notifyListeners();
     } catch (e) {
       throw Exception(e);
     }
   }
 
-  Future<void> addBeerToFavorites(Beer newFavoriteBeer) async {
+  Future<void> addProdutoToFavorites(Produto newFavoriteProduto) async {
 
     try
     {
@@ -57,16 +57,16 @@ class DataStorage extends ChangeNotifier {
         await file.create();
       }
 
-      _favoriteBeers.add(newFavoriteBeer);
+      _favoriteProdutos.add(newFavoriteProduto);
       notifyListeners();
-      await file.writeAsString(json.encode(_favoriteBeers).toString());
+      await file.writeAsString(json.encode(_favoriteProdutos).toString());
     }catch(e)
     {
       throw Exception(e);
     }
   }
 
-  Future<void> removeBeerFromFavorites(int beerId) async {
+  Future<void> removeProdutoFromFavorites(int produtoId) async {
     try {
       final file = await _localFile;
 
@@ -74,11 +74,11 @@ class DataStorage extends ChangeNotifier {
         await file.create();
       }
 
-      List<Beer> newList = _favoriteBeers.where((beer) => beer.id !=beerId).toList();
-      _favoriteBeers = newList;
+      List<Produto> newList = _favoriteProdutos.where((produto) => produto.id !=produtoId).toList();
+      _favoriteProdutos = newList;
       notifyListeners();
       
-      await file.writeAsString(json.encode(_favoriteBeers).toString());
+      await file.writeAsString(json.encode(_favoriteProdutos).toString());
     } catch (e) {
       throw Exception(e);
     }

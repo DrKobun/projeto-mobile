@@ -36,7 +36,7 @@ class _TelaInicialState extends State<TelaInicial>
     (
       appBar: AppBar
       (
-        title: const Text('I love programming!'),
+        title: const Text('PRODUTOS!!!'),
       ),
       body: _pages[_selected_Index],
       bottomNavigationBar: BottomNavigationBar

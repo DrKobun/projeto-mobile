@@ -2,29 +2,29 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_mobile/data_storage.dart';
 import 'package:projeto_mobile/http_service.dart';
-import 'package:projeto_mobile/models/beer.dart';
+import 'package:projeto_mobile/models/produto.dart';
 import 'package:projeto_mobile/screens/details/details_screen.dart';
 import 'package:provider/provider.dart';
 
-class BeersList extends StatefulWidget 
+class ProdutosList extends StatefulWidget 
 {
-  const BeersList({super.key});
+  const ProdutosList({super.key});
 
   @override
-  State<BeersList> createState() => _BeersListState();
+  State<ProdutosList> createState() => _ProdutosListState();
 }
 
-class _BeersListState extends State<BeersList> 
+class _ProdutosListState extends State<ProdutosList> 
 {
   final HttpService _httpService = HttpService();
-  late Future<List<Beer>> _beers;
+  late Future<List<Produto>> _produtos;
   
 
   @override
   void initState() 
   {
     super.initState();
-    _beers = _httpService.fetchBeers();
+    _produtos = _httpService.fetchProdutos();
   }
 
 
@@ -39,19 +39,19 @@ class _BeersListState extends State<BeersList>
 
       child: FutureBuilder
       (
-        future: _beers, 
+        future: _produtos, 
         builder: (BuildContext context, AsyncSnapshot snapshot) 
         {  
           if(snapshot.hasData)
           {
             return Consumer<DataStorage>(builder: (consumerCtx, dataStorage, child,) 
             {
-              List<Beer> beersData = snapshot.data;
-              List<Beer> filteredBeersData = beersData.where((beer) => beer.name.toLowerCase().contains(dataStorage.searchedTerm.toLowerCase())).toList();
+              List<Produto> produtosData = snapshot.data;
+              List<Produto> filteredProdutosData = produtosData.where((produto) => produto.name.toLowerCase().contains(dataStorage.searchedTerm.toLowerCase())).toList();
               return GridView.builder(
               shrinkWrap: true,
               primary: false,
-              itemCount: filteredBeersData.length,
+              itemCount: filteredProdutosData.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), 
               padding: const EdgeInsets.symmetric(horizontal: 10.0,),
               itemBuilder: 
@@ -59,7 +59,7 @@ class _BeersListState extends State<BeersList>
 
                 return GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsScreen(id: filteredBeersData[index].id)));   
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsScreen(id: filteredProdutosData[index].id)));   
                   },
                   child: Card
                   (
@@ -72,7 +72,7 @@ class _BeersListState extends State<BeersList>
                         [
                           Expanded
                           (
-                            child: Image.network(filteredBeersData[index].imageUrl)
+                            child: Image.network(filteredProdutosData[index].imageUrl)
                           ),
                           Container
                           (
@@ -81,7 +81,7 @@ class _BeersListState extends State<BeersList>
                             Text
                             (
                               textAlign: TextAlign.center,
-                              filteredBeersData[index].name,
+                              filteredProdutosData[index].name,
                               style: 
                               const TextStyle
                               (

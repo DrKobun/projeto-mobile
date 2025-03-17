@@ -1,39 +1,39 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:projeto_mobile/models/beer.dart'; 
+import 'package:projeto_mobile/models/produto.dart'; 
 
 
 class HttpService 
 {
   static String baseUrl = 'https://fakestoreapi.com';
-  static String getBeersUrl = '$baseUrl/products';
+  static String getProdutosUrl = '$baseUrl/products';
 
-  Future<List<Beer>> fetchBeers() async
+  Future<List<Produto>> fetchProdutos() async
   {
-    final response = await http.get(Uri.parse(getBeersUrl));
+    final response = await http.get(Uri.parse(getProdutosUrl));
 
     if(response.statusCode == 200)
     {
       List<dynamic> body = json.decode(response.body);
-      List<Beer> beers = body.map((item) => Beer.fromJson(item)).toList();
-      return beers;
+      List<Produto> produtos = body.map((item) => Produto.fromJson(item)).toList();
+      return produtos;
     }
     else
     {
-      throw Exception("Failed to load beers data!");
+      throw Exception("Failed to load produtos data!");
     }
   }
 
-  Future<Beer> fetchSingleBeer(int beerId) async {
-  final response = await http.get(Uri.parse('$getBeersUrl/$beerId'));
+  Future<Produto> fetchSingleProduto(int produtoId) async {
+  final response = await http.get(Uri.parse('$getProdutosUrl/$produtoId'));
 
   if (response.statusCode == 200) 
   {
     Map<String, dynamic> body = json.decode(response.body);
     
-    return Beer.fromJson(body);
+    return Produto.fromJson(body);
   } else {
-    throw Exception("Failed to load single beer data!");
+    throw Exception("Failed to load single produto data!");
   }
 }
 

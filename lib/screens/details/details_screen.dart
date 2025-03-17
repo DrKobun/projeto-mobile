@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_mobile/http_service.dart';
-import 'package:projeto_mobile/models/beer.dart';
+import 'package:projeto_mobile/models/produto.dart';
 import 'package:projeto_mobile/screens/details/components/datails_info.dart';
 import 'package:projeto_mobile/screens/details/components/details_app_bar.dart';
 
@@ -17,13 +17,13 @@ class _DetailsScreenState extends State<DetailsScreen>
 {
 
   final HttpService _httpService = HttpService();
-  late Future<Beer> _beerDetails;
+  late Future<Produto> _produtoDetails;
   
 
   @override
   void initState() {
     super.initState();
-    _beerDetails = _httpService.fetchSingleBeer(widget.id);
+    _produtoDetails = _httpService.fetchSingleProduto(widget.id);
   }
   @override
   Widget build(BuildContext context) 
@@ -32,7 +32,7 @@ class _DetailsScreenState extends State<DetailsScreen>
     (
       body: FutureBuilder
       (
-        future: _beerDetails,
+        future: _produtoDetails,
         builder:(
           BuildContext context, 
           AsyncSnapshot snapshot,
@@ -48,7 +48,7 @@ class _DetailsScreenState extends State<DetailsScreen>
               slivers: <Widget>
               [                                       //try just image
                 DetailsAppBar(imageUrl: snapshot.data.imageUrl,),
-                DetailsInfo(beer: snapshot.data),
+                DetailsInfo(produto: snapshot.data),
               ],
             );
           }

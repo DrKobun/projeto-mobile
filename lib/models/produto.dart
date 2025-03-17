@@ -1,4 +1,4 @@
-class Beer 
+class Produto 
 {
   final int id;
   final String name;
@@ -6,7 +6,7 @@ class Beer
   final String description;
   final dynamic abv;
 
-  const Beer
+  const Produto
   ({
       required this.id,
       required this.name,
@@ -15,7 +15,7 @@ class Beer
       required this.abv
   });
   //                String
-  Beer.fromJson(Map<dynamic, dynamic> json)
+  Produto.fromJson(Map<dynamic, dynamic> json)
     : id = json["id"],
       name = json["title"], //[name]
       imageUrl = json["image"].toString(),
