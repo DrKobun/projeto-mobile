@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "528899770660",
+    "project_id": "market-ile",
+    "storage_bucket": "market-ile.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528899770660:android:17936a3dd37b8860e0cbb1",
+        "android_client_info": {
+          "package_name": "com.example.projeto_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtqkhx9EWXk-4O6VI_gx83Kr73uGgsK1E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
