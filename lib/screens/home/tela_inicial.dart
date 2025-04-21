@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_mobile/screens/favorites/favorites_screen.dart';
 import 'package:projeto_mobile/screens/home/components/search_list.dart';
+import 'package:projeto_mobile/servicos/authentication_service.dart';
 
 class TelaInicial extends StatefulWidget 
 {
@@ -37,6 +38,19 @@ class _TelaInicialState extends State<TelaInicial>
       appBar: AppBar
       (
         title: const Text('PRODUTOS!!!'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text("Logout"),
+              onTap:(){
+                AuthenticationService().logout();
+              } 
+            ),
+          ],
+        ),
       ),
       body: _pages[_selected_Index],
       bottomNavigationBar: BottomNavigationBar

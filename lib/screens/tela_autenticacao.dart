@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_mobile/_common/my_colors.dart';
+import 'package:projeto_mobile/_common/my_snackbar.dart';
 import 'package:projeto_mobile/components/decoration_autentication_field.dart';
+import 'package:projeto_mobile/servicos/authentication_service.dart';
 
 class AutenticacaoTela extends StatefulWidget {
   const AutenticacaoTela({super.key});
@@ -11,7 +13,12 @@ class AutenticacaoTela extends StatefulWidget {
 
 class _AutenticacaoTelaState extends State<AutenticacaoTela> {
   bool isLogin = true;
-  final _formKey = GlobalKey<FormState>();  
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _senhaController = TextEditingController();
+  TextEditingController _nomeController = TextEditingController();
+
+  AuthenticationService _authenticationService = AuthenticationService();
 
   @override
   Widget build(BuildContext context) {
@@ -64,41 +71,35 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
                           height: 16,
                         ),
                         TextFormField(
-                            decoration: getAuthenticationInputDecoration("Email"),
-                            validator: (String? value) {
-                              if(value == null)
-                              {
-                                return "O e-mail não pode ser vazio!!!";
-                              }
-                              if(value.length < 5)
-                              {
-                                return "O endereço de email é muito curto!";
-                              }
-                              if(!value.contains("@"))
-                              {
-                                return "O email não é válido!";
-                              }
-
-                                return null;
-
-                            },
+                          controller: _emailController,
+                          decoration: getAuthenticationInputDecoration("Email"),
+                          validator: (String? value) {
+                            if (value == null) {
+                              return "O e-mail não pode ser vazio!!!";
+                            }
+                            if (value.length < 5) {
+                              return "O endereço de email é muito curto!";
+                            }
+                            if (!value.contains("@")) {
+                              return "O email não é válido!";
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 8),
                         TextFormField(
+                          controller: _senhaController,
                           decoration: getAuthenticationInputDecoration("Senha"),
                           obscureText: true,
                           validator: (String? value) {
-                              if(value == null)
-                              {
-                                return "A senha não pode ser vazia!";
-                              }
-                              if(value.length < 5)
-                              {
-                                return "Senha muito curta!";
-                              }
-                                return null;
-                            },
-                          
+                            if (value == null) {
+                              return "A senha não pode ser vazia!";
+                            }
+                            if (value.length < 5) {
+                              return "Senha muito curta!";
+                            }
+                            return null;
+                          },
                         ),
                         Visibility(
                             visible: !isLogin,
@@ -106,38 +107,34 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
                               children: [
                                 const SizedBox(height: 8),
                                 TextFormField(
-                                  decoration: getAuthenticationInputDecoration("Confirme a senha"),
+                                  decoration: getAuthenticationInputDecoration(
+                                      "Confirme a senha"),
                                   obscureText: true,
                                   validator: (String? value) {
-                                  if(value == null)
-                                  {
-                                    return "A confirmação de senha não pode ser vazia!";
-                                  }
-                                  if(value.length < 5)
-                                  {
-                                    return "Confirmação de senha muito curta!";
-                                  }
+                                    if (value == null) {
+                                      return "A confirmação de senha não pode ser vazia!";
+                                    }
+                                    if (value.length < 5) {
+                                      return "Confirmação de senha muito curta!";
+                                    }
                                     return null;
-
-                                },
+                                  },
                                 ),
                                 const SizedBox(height: 8),
                                 TextFormField(
-                                    decoration: getAuthenticationInputDecoration("Nome de usuário"),
-                                    validator: (String? value) {
-                                    if(value == null)
-                                    {
+                                  controller: _nomeController,
+                                  decoration: getAuthenticationInputDecoration(
+                                      "Nome de usuário"),
+                                  validator: (String? value) {
+                                    if (value == null) {
                                       return "O nome não pode ser vazio!";
                                     }
-                                    if(value.length < 5)
-                                    {
+                                    if (value.length < 5) {
                                       return "Nome muito curto!";
                                     }
-                                      return null;
+                                    return null;
                                   },
-                                    
-                                    ),
-                                    
+                                ),
                               ],
                             )),
                         const SizedBox(
@@ -169,13 +166,43 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
           ],
         ));
   }
-  botaoPrincipalClicado()
-  {
-    if(_formKey.currentState!.validate())
-    {
-      print("Form válido!");
-    }
-    else{
+
+  botaoPrincipalClicado() {
+    String nome = _emailController.text;
+    String senha = _senhaController.text;
+    String email = _emailController.text;
+
+    if (_formKey.currentState!.validate()) {
+      if (isLogin) {
+        print("Entrada validada!");
+        _authenticationService.loginUsers(email: email, senha: senha, nome: nome)
+        .then(
+          (String? error)
+          {
+            if(error! == null)
+            {
+              showSnackBar(context: context, text: error);
+            }
+          }
+        );
+      } else {
+        print("Cadastro validado!");
+        print(
+            "${_emailController.text}, ${_senhaController}, ${_nomeController}");
+        _authenticationService
+            .userRegistration(nome: nome, email: email, senha: senha)
+            .then(
+          (String? error) {
+            if (error != null) {
+              // Tem erro
+              showSnackBar(
+                context: context, 
+                text: error);
+            } 
+          },
+        );
+      }
+    } else {
       print("Form inválido!");
     }
   }
