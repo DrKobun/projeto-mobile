@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_mobile/data_storage.dart';
 import 'package:projeto_mobile/screens/home/tela_inicial.dart';
+import 'package:projeto_mobile/screens/home/tela_inicial_vendedor.dart';
 import 'package:projeto_mobile/screens/login_form.dart';
 import 'package:projeto_mobile/screens/tela_autenticacao.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: RoteadorTela(),
+            //RoteadorTela(),
     );
   }
 }
@@ -40,7 +42,7 @@ class RoteadorTela extends StatelessWidget {
       {
         if(snapshot.hasData)
         {
-          return TelaInicial();
+          return InicioTelaVendedor();//TelaInicial();
         }
         else
         {
