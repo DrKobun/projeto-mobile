@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto_mobile/data_storage.dart';
 import 'package:projeto_mobile/screens/home/tela_inicial.dart';
 import 'package:projeto_mobile/screens/home/tela_inicial_vendedor.dart';
+import 'package:projeto_mobile/screens/list_product.dart';
 import 'package:projeto_mobile/screens/login_form.dart';
 import 'package:projeto_mobile/screens/tela_autenticacao.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +43,7 @@ class RoteadorTela extends StatelessWidget {
       {
         if(snapshot.hasData)
         {
-          return InicioTelaVendedor();//TelaInicial();
+          return ListaProdutosScreen(); TelaInicial(); InicioTelaVendedor();
         }
         else
         {

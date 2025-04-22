@@ -1,0 +1,2 @@
+C:/Users/Wally/Desktop/checkpoint/projeto-mobile/android/app/.cxx/Debug/2f4f2f2g/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/Wally/Desktop/checkpoint/projeto-mobile/android/app/.cxx/Debug/2f4f2f2g/armeabi-v7a/CMakeFiles/rebuild_cache.dir
