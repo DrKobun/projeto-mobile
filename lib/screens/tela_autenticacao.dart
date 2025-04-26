@@ -13,12 +13,13 @@ class AutenticacaoTela extends StatefulWidget {
 
 class _AutenticacaoTelaState extends State<AutenticacaoTela> {
   bool isLogin = true;
+  String tipoUsuario = "comprador";
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _senhaController = TextEditingController();
-  TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+  final TextEditingController _nomeController = TextEditingController();
 
-  AuthenticationService _authenticationService = AuthenticationService();
+  final AuthenticationService _authenticationService = AuthenticationService();
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +136,33 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
                                     return null;
                                   },
                                 ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: RadioMenuButton(
+                                          value: "vendedor",
+                                          groupValue: tipoUsuario,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              tipoUsuario = value.toString();
+                                            });
+                                          },
+                                          child: Text("Vendedor?")),
+                                    ),
+                                    Expanded(
+                                      child: RadioMenuButton(
+                                          value: "comprador",
+                                          groupValue: tipoUsuario,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              tipoUsuario = value.toString();
+                                            });
+                                          },
+                                          child: Text("Cliente?")),
+                                    )
+                                  ],
+                                )
                               ],
                             )),
                         const SizedBox(
@@ -168,37 +196,36 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
   }
 
   botaoPrincipalClicado() {
-    String nome = _emailController.text;
+    String nome = _nomeController.text;
     String senha = _senhaController.text;
     String email = _emailController.text;
 
     if (_formKey.currentState!.validate()) {
       if (isLogin) {
         print("Entrada validada!");
-        _authenticationService.loginUsers(email: email, senha: senha, nome: nome)
-        .then(
-          (String? error)
-          {
-            if(error! == null)
-            {
-              showSnackBar(context: context, text: error);
-            }
+        _authenticationService
+            .loginUsers(email: email, senha: senha, nome: nome)
+            .then((String? error) {
+          if (error! == null) {
+            showSnackBar(context: context, text: error);
           }
-        );
+        });
       } else {
         print("Cadastro validado!");
         print(
             "${_emailController.text}, ${_senhaController}, ${_nomeController}");
         _authenticationService
-            .userRegistration(nome: nome, email: email, senha: senha)
+            .userRegistration(
+                nome: nome,
+                email: email,
+                senha: senha,
+                tipoUsuario: tipoUsuario)
             .then(
           (String? error) {
             if (error != null) {
               // Tem erro
-              showSnackBar(
-                context: context, 
-                text: error);
-            } 
+              showSnackBar(context: context, text: error);
+            }
           },
         );
       }

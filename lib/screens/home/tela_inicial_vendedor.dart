@@ -17,19 +17,7 @@ class InicioTelaVendedor extends StatelessWidget {
       appBar: AppBar(
         title: Text("Tela de Vendas"),
       ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text("Logout"),
-              onTap: (){
-                AuthenticationService().logout();
-              },
-            )
-          ],
-        ),
-      ),
+      
     );
   }
 }

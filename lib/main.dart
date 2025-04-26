@@ -43,7 +43,7 @@ class RoteadorTela extends StatelessWidget {
       {
         if(snapshot.hasData)
         {
-          return ListaProdutosScreen(); TelaInicial(); InicioTelaVendedor();
+          return  ListaProdutosScreen(); TelaInicial(); InicioTelaVendedor();
         }
         else
         {
