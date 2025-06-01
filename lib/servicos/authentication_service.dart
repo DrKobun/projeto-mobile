@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  //Testar com String? userRegistration
   Future<String?> userRegistration(
       {required String nome,
       required String email,
@@ -19,11 +18,10 @@ class AuthenticationService {
           .set({
         'nome': nome,
         'email': email,
-        'tipoUsuario': tipoUsuario, // Save the user type
+        'tipoUsuario': tipoUsuario,
         'createdAt': FieldValue.serverTimestamp(),
       });
       await userCredential.user!.updateDisplayName(nome);
-      //teste de adicionar uma coleção de usuário
 
       return null;
     } on FirebaseAuthException catch (e) {

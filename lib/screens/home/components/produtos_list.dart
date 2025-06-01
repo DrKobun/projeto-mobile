@@ -89,8 +89,6 @@ class _ProdutosListState extends State<ProdutosList>
                               ),
                             ),
                           ),
-                          
-                          
                         ], 
                       ),
                     ),

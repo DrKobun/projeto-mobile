@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_mobile/data_storage.dart';
@@ -27,7 +28,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: RoteadorTela(),
-            //RoteadorTela(),
     );
   }
 }
@@ -38,15 +38,34 @@ class RoteadorTela extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.userChanges(), 
-      builder: (context, snapshot)
-      {
-        if(snapshot.hasData)
-        {
-          return  ListaProdutosScreen(); TelaInicial(); InicioTelaVendedor();
-        }
-        else
-        {
+      stream: FirebaseAuth.instance.userChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return FutureBuilder<DocumentSnapshot>(
+            future: FirebaseFirestore.instance
+                .collection('users')
+                .doc(snapshot.data!.uid)
+                .get(),
+            builder: (context, userSnapshot) {
+              if (userSnapshot.hasData) {
+                final userData = userSnapshot.data!.data() as Map<String, dynamic>;
+                final tipoUsuario = userData['tipoUsuario'] as String;
+
+                if (tipoUsuario == 'vendedor') {
+                  return ListaProdutosScreen();
+                } else {
+                  return TelaInicial(
+                    user: snapshot.data!,
+                  );
+                }
+              }
+
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          );
+        } else {
           return AutenticacaoTela();
         }
       },

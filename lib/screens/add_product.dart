@@ -1,4 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:projeto_mobile/servicos/produto_service.dart';
 
 class AddProdutoScreen extends StatefulWidget {
@@ -14,7 +17,32 @@ class _AddProdutoScreenState extends State<AddProdutoScreen> {
   final _descricaoController = TextEditingController();
   final _produtoService = ProdutoService();
 
-@override
+  File? _imageFile;
+
+  Future<void> _pickImage() async {
+    final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (picked != null) {
+      setState(() {
+        _imageFile = File(picked.path);
+      });
+    }
+  }
+
+  Future<String> _uploadImage(File image) async {
+    try {
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('produtos/${DateTime.now().millisecondsSinceEpoch}.jpg');
+      await storageRef.putFile(image);
+      
+      return await storageRef.getDownloadURL();
+    } catch (e) {
+      print('Erro ao fazer upload da imagem: $e');
+      return "NÃO FOI ENVIADO!";
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -50,15 +78,28 @@ class _AddProdutoScreenState extends State<AddProdutoScreen> {
                   return null;
                 },
               ),
-               ElevatedButton(
+              const SizedBox(height: 16),
+              _imageFile != null
+                  ? Image.file(_imageFile!, height: 100)
+                  : const Text('Nenhuma imagem selecionada'),
+              ElevatedButton(
+                onPressed: _pickImage,
+                child: const Text('Selecionar Imagem'),
+              ),
+              ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
+                    String? imageUrl;
+                    if (_imageFile != null) {
+                      imageUrl = await _uploadImage(_imageFile!);
+                    }
                     await _produtoService.addProduto(
                       _nomeController.text,
                       _descricaoController.text,
+                      imagemUrl: imageUrl,
                     );
                     if (mounted) {
-                      Navigator.pop(context); // Return to list screen after saving
+                      Navigator.pop(context);
                     }
                   }
                 },

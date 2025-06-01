@@ -34,15 +34,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              DetailsScreen(id: favoriteProdutos[index].id),
+                          builder: (context) => DetailsScreen(id: favoriteProdutos[index].id),
                         ),
                       );
                     },
                     title: Text(favoriteProdutos[index].name),
                     leading: CircleAvatar(
-                      backgroundImage:
-                          NetworkImage(favoriteProdutos[index].imageUrl),
+                      backgroundImage: NetworkImage(favoriteProdutos[index].imageUrl),
                     ),
                     trailing: IconButton(
                       icon: const Icon(Icons.delete),
