@@ -1,1 +1,47 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"market-ile","appId":"1:528899770660:android:17936a3dd37b8860e0cbb1","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"market-ile","configurations":{"android":"1:528899770660:android:17936a3dd37b8860e0cbb1","ios":"1:528899770660:ios:27aaf4ec78667cf2e0cbb1","macos":"1:528899770660:ios:27aaf4ec78667cf2e0cbb1","web":"1:528899770660:web:b45146adbe74355ce0cbb1","windows":"1:528899770660:web:a7fbc06b3f4a2f78e0cbb1"}}}}}}
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "market-ile",
+                    "appId": "1:528899770660:android:17936a3dd37b8860e0cbb1",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "market-ile",
+                    "configurations": {
+                        "android": "1:528899770660:android:17936a3dd37b8860e0cbb1",
+                        "ios": "1:528899770660:ios:27aaf4ec78667cf2e0cbb1",
+                        "macos": "1:528899770660:ios:27aaf4ec78667cf2e0cbb1",
+                        "web": "1:528899770660:web:b45146adbe74355ce0cbb1",
+                        "windows": "1:528899770660:web:a7fbc06b3f4a2f78e0cbb1"
+                    }
+                }
+            }
+        }
+    },
+     "storage": {
+        "cors": [
+            {
+                "origin": [
+                    "*",
+                    "http://localhost",
+                    "http://localhost:*",
+                    "http://127.0.0.1:*"
+                ],
+                "method": ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"],
+                "maxAgeSeconds": 3600,
+                "responseHeader": [
+                    "Content-Type",
+                    "Access-Control-Allow-Origin",
+                    "Access-Control-Allow-Methods",
+                    "Access-Control-Allow-Headers",
+                    "X-Requested-With",
+                    "Authorization"
+                ]
+            }
+        ]
+    }
+}

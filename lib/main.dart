@@ -1,24 +1,38 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import 'package:projeto_mobile/data_storage.dart';
 import 'package:projeto_mobile/screens/home/tela_inicial.dart';
-import 'package:projeto_mobile/screens/home/tela_inicial_vendedor.dart';
 import 'package:projeto_mobile/screens/list_product.dart';
-import 'package:projeto_mobile/screens/login_form.dart';
 import 'package:projeto_mobile/screens/tela_autenticacao.dart';
-import 'package:provider/provider.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+
+ if (kIsWeb) {
+    // Web-specific initialization
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.web,
+    );
+  } else {
+    // Non-web initialization
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => DataStorage()),
+      ],
+      child: const MyApp(),
+    ),
   );
-  runApp(const MyApp());
-  runApp(ChangeNotifierProvider(
-      create: (context) => DataStorage(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

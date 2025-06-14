@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import "package:projeto_mobile/models/produto_modelo.dart";
-import "package:projeto_mobile/servicos/authentication_service.dart";
 
 class InicioTelaVendedor extends StatelessWidget {
    InicioTelaVendedor({super.key});

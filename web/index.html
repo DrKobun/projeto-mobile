@@ -31,6 +31,29 @@
 
   <title>projeto_mobile</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB1VizOEL1wR_7AxdP8RWwvHM1V2YZNeOQ",
+      authDomain: "drkobun-4923c.firebaseapp.com",
+      projectId: "drkobun-4923c",
+      storageBucket: "drkobun-4923c.appspot.com",
+      messagingSenderId: "561023921901",
+      appId: "1:561023921901:web:08300d018ac1d503ddacfd"
+    };
+
+    // Initialize Firebase before Flutter
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <!-- Flutter -->
+  <script src="flutter.js" defer></script>
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>

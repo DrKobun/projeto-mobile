@@ -206,14 +206,12 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
         _authenticationService
             .loginUsers(email: email, senha: senha, nome: nome)
             .then((String? error) {
-          if (error! == null) {
-            showSnackBar(context: context, text: error);
-          }
+          
         });
       } else {
         print("Cadastro validado!");
         print(
-            "${_emailController.text}, ${_senhaController}, ${_nomeController}");
+            "${_emailController.text}, $_senhaController, $_nomeController");
         _authenticationService
             .userRegistration(
                 nome: nome,
