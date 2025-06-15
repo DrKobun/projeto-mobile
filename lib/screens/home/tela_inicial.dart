@@ -10,6 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:provider/provider.dart';
 import '../tela_carrinho.dart';
+import '../home/tela_favoritos.dart';
+import './tela_produto.dart';
 
 // import 'package:projeto_mobile/provider/data_storage.dart';
 
@@ -212,7 +214,7 @@ class _TelaInicialState extends State<TelaInicial> {
     }
 
     // Create wildcard pattern for case-insensitive search
-    String searchTerm = _searchQuery.toLowerCase();
+    String searchTerm = _searchQuery;
     
     return FirebaseFirestore.instance
         .collection('produtos')
@@ -398,6 +400,11 @@ class _TelaInicialState extends State<TelaInicial> {
               context,
               MaterialPageRoute(builder: (context) => const TelaCarrinho()),
             );
+          } else if (index == 1) { // Favorites tab
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const TelaFavoritos()),
+            );
           } else {
             setState(() {
               _selected_Index = index;
@@ -520,6 +527,27 @@ class _TelaInicialState extends State<TelaInicial> {
                   style: const TextStyle(fontSize: 12),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 8),
+                // Details Button
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TelaProduto(produtoId: doc.id),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.info_outline, size: 16),
+                    label: const Text('Ver Detalhes'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Theme.of(context).primaryColor,
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                    ),
+                  ),
                 ),
                 const Spacer(),
                 // Quantity Controls
@@ -700,6 +728,27 @@ class _TelaInicialState extends State<TelaInicial> {
                   style: const TextStyle(fontSize: 11),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 8),
+                // Details Button
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TelaProduto(produtoId: doc.id),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.info_outline, size: 16),
+                    label: const Text('Ver Detalhes'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Theme.of(context).primaryColor,
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                    ),
+                  ),
                 ),
                 const Spacer(),
                 // Quantity Controls
